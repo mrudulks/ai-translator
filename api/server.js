@@ -12,6 +12,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post('/api/translate', async (req, res) => {
   try {
+    console.log("Received translation request:", req.body);
     const { text, targetLang } = req.body;
     // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     // Use the new Gemini 3 series
