@@ -1,5 +1,3 @@
-import React from "react";
-
 const languages = [
   { name: "German", code: "de-DE" },
   { name: "Spanish", code: "es-ES" },
