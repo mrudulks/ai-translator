@@ -31,4 +31,8 @@ const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
   }
 });
 
+app.get('/', (req, res) => {
+  res.send("Hello from the translation API!");
+});
+
 app.listen(5000, () => console.log("Server running on port 5000"));
