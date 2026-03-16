@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
-        "/api": env.VITE_API_URL || "http://localhost:5000",
+        "/api": env.VITE_API_URL || "http://localhost:5000/api",
       },
     },
   };

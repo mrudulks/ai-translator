@@ -10,6 +10,10 @@ app.use(express.json());
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+app.get('/api', (req, res) => {
+  res.json({ status: "API is running" });
+});
+
 app.post('/api/translate', async (req, res) => {
   try {
     console.log("Received translation request:", req.body);
@@ -31,7 +35,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
   }
 });
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send("Hello from the translation API!");
 });
 

@@ -1,19 +1,33 @@
 import { useState } from "react";
 import axios from "axios";
 import { LanguageSelect } from "./LanguageSelect";
+import { useEffect } from "react";
 
 export const Translator = () => {
   const [text, setText] = useState("");
   const [result, setResult] = useState("");
   const [lang, setLang] = useState({ name: "German", code: "de-DE" });
   const [isTranslating, setIsTranslating] = useState(false);
+  const [apiStatus, setApiStatus] = useState("checking...");
+
+  useEffect(() => {
+    const checkAPI = async () => {
+      try {
+        const { data } = await axios.get("/api");
+        setApiStatus("✓ Connected");
+      } catch (err) {
+        setApiStatus("✗ Disconnected");
+      }
+    };
+    checkAPI();
+  }, []);
 
   const handleTranslate = async () => {
     if (!text) return;
     setIsTranslating(true);
     try {
       // Points to your Express server
-      const { data } = await axios.post("http://localhost:5000/api/translate", {
+      const { data } = await axios.post("/api/translate", {
         text,
         targetLang: lang.name,
       });
@@ -33,7 +47,10 @@ export const Translator = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gray-50 rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-4">Gemini Voice Translator 🤖</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">Gemini Voice Translator 🤖</h2>
+        <span className="text-sm font-semibold">{apiStatus}</span>
+      </div>
 
       <textarea
         className="w-full h-32 p-4 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
